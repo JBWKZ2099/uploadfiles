@@ -25,11 +25,18 @@
 	<div class="container">
 		{!! Form::open(["route"=>"mueble.store", "method"=>"POST", "files"=>true]) !!}
 			<div class="form-group row">
-				{!! Form::label("path", "Seleccionar archivo", ["col-form-label col-md-2"]) !!}
+				{!! Form::label("path01", "Seleccionar archivo", ["col-form-label col-md-2"]) !!}
 				<div class="col-md-10">
 					{{-- Para cambiar la ruta de donde se almacenarán archivos, se debe de modificar
 					el archivo /config/filesystems.php ...dicha ruta está en la línea 48-49 --}}
-					{!! Form::file("path", ["class"=>"form-control"]) !!}
+					{!! Form::file("path[]", ["id"=>"path01", "class"=>"form-control"]) !!}
+				</div>
+			</div>
+
+			<div class="form-group row">
+				{!! Form::label("path02", "Seleccionar archivo", ["col-form-label col-md-2"]) !!}
+				<div class="col-md-10">
+					{!! Form::file("path[]", ["id"=>"path02", "class"=>"form-control"]) !!}
 				</div>
 			</div>
 			{!! Form::submit("Subir archivo", ["class"=>"btn btn-primary float-right"]) !!}
@@ -39,22 +46,28 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th>Archivo</th>
+						<th>Archivo 01</th>
+						<th>Archivo 02</th>
 						<th>Vista previa</th>
+						<th>Vista previa 02</th>
 						<th>Acciones</th>
 					</tr>
 				</thead>
 				<tbody>
 					@if( $muebles==null )
 						<tr>
-							<td colspan="3" class="text-center">No hay registros.</td>
+							<td colspan="5" class="text-center">No hay registros.</td>
 						</tr>
 					@else
 						@foreach( $muebles as $mueble )
 							<tr>
-								<td>{{ $mueble->path }}</td>
+								<td>{{ $mueble->path0 }}</td>
+								<td>{{ $mueble->path1 }}</td>
 								<td>
-									<img class="img-fluid" src="muebles/{{ $mueble->path }}" alt="{{ $mueble->path }}" style="max-width: 250px;">
+									<img class="img-fluid" src="muebles/{{ $mueble->path1 }}" alt="{{ $mueble->path1 }}" style="max-width: 250px;">
+								</td>
+								<td>
+									<img class="img-fluid" src="muebles/{{ $mueble->path0 }}" alt="{{ $mueble->path0 }}" style="max-width: 250px;">
 								</td>
 								<td>
 									{!! link_to_route("mueble.edit", $title="Editar", $parameter=$mueble->id, $attributes=["class"=>"btn btn-primary"]) !!}

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\MueblesModel;
+use Carbon\Carbon;
 use Redirect;
 
 class MueblesController extends Controller
@@ -20,8 +21,23 @@ class MueblesController extends Controller
     }
 
     public function store(Request $request) {
-    	// dd($request->path);
-    	MueblesModel::create( $request->all() );
+
+    	$files_array = count( $request->path );
+    	if( $request->hasFile("path") ) {
+    		$array = [];
+
+	    	for( $i=0; $i<$files_array; $i++ ) {
+	    		$path_name = "";
+	    		$path_name = $request->path[$i];
+    			$name = str_random(10)."-".Carbon::now()->second."_".$path_name->getClientOriginalName();
+    			\Storage::disk('muebles')->put( $name, \File::get($path_name) );
+
+    			/*array_push($array, ["path".$i => $name]);*/
+    			$array["path".$i] = $name;
+	    	}
+	    }
+    	
+    	MueblesModel::create($array);
     	return redirect::to("/mueble");
     }
 

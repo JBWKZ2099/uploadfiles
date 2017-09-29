@@ -32,6 +32,14 @@
 					{!! Form::file("path", ["class"=>"form-control"]) !!}
 				</div>
 			</div>
+			<div class="form-group row">
+				{!! Form::label("path02", "Seleccionar archivo", ["col-form-label col-md-2"]) !!}
+				<div class="col-md-10">
+					{{-- Para cambiar la ruta de donde se almacenarán archivos, se debe de modificar
+					el archivo /config/filesystems.php ...dicha ruta está en la línea 48-49 --}}
+					{!! Form::file("path02", ["class"=>"form-control"]) !!}
+				</div>
+			</div>
 			{!! Form::submit("Actualizar", ["class"=>"btn btn-success float-right"]) !!}
 			<a href="{{ URL::to("mueble") }}" class="btn btn-outline-secondary float-right mr-3">Volver</a>
 		{!! Form::close() !!}

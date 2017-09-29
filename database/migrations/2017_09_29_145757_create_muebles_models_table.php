@@ -14,7 +14,8 @@ class CreateMueblesModelsTable extends Migration
     {
         Schema::create('muebles_models', function (Blueprint $table) {
             $table->increments("id");
-            $table->string("path");
+            $table->string("path0");
+            $table->string("path1");
             $table->timestamps();
         });
     }
